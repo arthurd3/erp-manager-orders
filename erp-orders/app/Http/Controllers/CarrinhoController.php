@@ -70,5 +70,32 @@ class CarrinhoController extends Controller
             return 20;
         }
     }
+
+    public function atualizar(Request $request, $index)
+    {
+        $carrinho = session()->get('carrinho', []);
+        
+        if (isset($carrinho[$index])) {
+            $carrinho[$index]['quantidade'] = $request->quantidade;
+        }
+        
+        session()->put('carrinho', $carrinho);
+
+        return redirect()->route('carrinho.index');
+    }
+
+    public function remover($index)
+    {
+        $carrinho = session()->get('carrinho', []);
+
+        if (isset($carrinho[$index])) {
+            unset($carrinho[$index]);
+        }
+
+        session()->put('carrinho', array_values($carrinho));
+
+        return redirect()->route('carrinho.index');
+    }
+
 }
 
