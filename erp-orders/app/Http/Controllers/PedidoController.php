@@ -16,7 +16,7 @@ class PedidoController extends Controller
 
         $subtotal = collect($carrinho)->sum(fn($item) => $item['preco'] * $item['quantidade']);
         $frete = $subtotal > 200 ? 0 : ($subtotal >= 52 && $subtotal <= 166.59 ? 15 : 20);
-        $total = $subtotal + $frete; // Garantir que o valor total seja calculado
+        $total = $subtotal + $frete; 
 
        $pedido = Pedido::create([
             'endereco' => $request->input('endereco'),
@@ -27,7 +27,7 @@ class PedidoController extends Controller
             'status' => 'pendente',
         ]);
 
-        // Associando produtos ao pedido
+    
         foreach ($carrinho as $item) {
             $pedido->produtos()->attach($item['produto_id'], [
                 'quantidade' => $item['quantidade'],

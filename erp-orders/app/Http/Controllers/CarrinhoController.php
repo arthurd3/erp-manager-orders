@@ -21,16 +21,14 @@ class CarrinhoController extends Controller
     public function adicionar(Request $request, $id)
     {
         $produto_id = $id;
-        $variacao = $request->input('variacao', 'padrão'); // ou null se não houver variação
+        $variacao = $request->input('variacao', 'padrão'); 
         $quantidade = (int)$request->input('quantidade', 1);
 
         $produto = Produto::findOrFail($produto_id);
         $estoque = Estoque::where('produto_id', $produto_id)
                         ->where('variacao', $variacao)
                         ->first();
-
-    
-
+                        
         $carrinho = session()->get('carrinho', []);
         $key = $produto_id . '-' . $variacao;
 

@@ -22,7 +22,7 @@ class ProdutoController extends Controller
 
     public function store(Request $request)
     {
-        // Validação dos dados recebidos
+        
         $request->validate([
             'nome' => 'required',
             'preco' => 'required|numeric',
@@ -31,13 +31,13 @@ class ProdutoController extends Controller
             'variacoes.*.quantidade' => 'required|integer'
         ]);
 
-        // Criação do produto
+        
         $produto = Produto::create([
             'nome' => $request->nome,
             'preco' => $request->preco
         ]);
 
-        // Criação do estoque para as variações
+        
         foreach ($request->variacoes as $variacao) {
             Estoque::create([
                 'produto_id' => $produto->id,
@@ -46,25 +46,26 @@ class ProdutoController extends Controller
             ]);
         }
 
-        // Adicionar produto ao carrinho (usando o ID do produto)
+        
         $carrinho = session()->get('carrinho', []);
         $carrinho[] = [
             'id' => $produto->id,
             'nome' => $produto->nome,
             'preco' => $produto->preco,
-            'quantidade' => 1, // A quantidade inicial do produto no carrinho
+            'quantidade' => 1,
         ];
 
         session()->put('carrinho', $carrinho);
 
-        // Redirecionar para o carrinho
         return redirect()->route('produtos.index')->with('success', 'Produto criado com sucesso e adicionado ao carrinho!');
     }
 
     public function edit($id)
     {
-        $produto = Produto::with('estoques')->findOrFail($id);
-        return view('produtos.edit', compact('produto'));
+        $produto = Produto::findOrFail($id);
+        $estoques = Estoque::where('produto_id', $id)->get(); 
+
+        return view('produtos.edit', compact('produto', 'estoques'));
     }
 
     public function update(Request $request, $id)
@@ -77,14 +78,19 @@ class ProdutoController extends Controller
         ]);
 
     
-        foreach ($request->variacoes as $estoque_id => $data) {
-            $estoque = Estoque::find($estoque_id);
-            if ($estoque) {
-                $estoque->update([
-                    'variacao' => $data['nome'],
-                    'quantidade' => $data['quantidade']
-                ]);
+        if ($request->has('variacoes') && is_array($request->variacoes)) {
+            foreach ($request->variacoes as $estoque_id => $data) {
+                $estoque = Estoque::find($estoque_id);
+
+                if ($estoque) {
+                    $estoque->update([
+                        'variacao' => $data['nome'],
+                        'quantidade' => $data['quantidade'],
+                    ]);
+                }
             }
+        } else {
+            return redirect()->route('produtos.index')->with('error', 'Nenhuma variação fornecida!');
         }
 
         return redirect()->route('produtos.index')->with('success', 'Produto atualizado!');

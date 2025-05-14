@@ -15,22 +15,11 @@ Route::get('/produtos', [ProdutoController::class, 'index'])->name('produtos.ind
 Route::redirect('/', '/produtos/create')->name('home');
 
 Route::prefix('produtos')->name('produtos.')->group(function () {
-    
     Route::get('/create', [ProdutoController::class, 'create'])->name('create');
-    
-    
     Route::post('/', [ProdutoController::class, 'store'])->name('store');
-    
-    
     Route::get('/', [ProdutoController::class, 'index'])->name('index');
-    
-   
     Route::get('/{id}/edit', [ProdutoController::class, 'edit'])->name('edit');
-    
-   
     Route::put('/{id}', [ProdutoController::class, 'update'])->name('update');
-    
-    
     Route::delete('/{id}', [ProdutoController::class, 'destroy'])->name('destroy');
 });
 
