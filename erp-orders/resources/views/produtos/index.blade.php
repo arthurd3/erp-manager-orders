@@ -25,6 +25,10 @@
                             @method('DELETE')
                             <button type="submit" class="ml-2 bg-red-500 text-white hover:bg-red-700 px-4 py-2 rounded-md">Excluir</button>
                         </form>
+                        <form action="{{ route('carrinho.adicionar', $produto->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="ml-2 bg-green-500 text-white hover:bg-green-700 px-4 py-2 rounded-md">Adicionar ao Carrinho</button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach

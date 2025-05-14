@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Pedido;
 use Illuminate\Http\Request;
+use App\Models\ItemPedido; 
 
 class PedidoController extends Controller
 {
@@ -15,28 +16,26 @@ class PedidoController extends Controller
 
         $subtotal = collect($carrinho)->sum(fn($item) => $item['preco'] * $item['quantidade']);
         $frete = $subtotal > 200 ? 0 : ($subtotal >= 52 && $subtotal <= 166.59 ? 15 : 20);
+        $total = $subtotal + $frete; // Garantir que o valor total seja calculado
 
-        $pedido = Pedido::create([
+       $pedido = Pedido::create([
             'endereco' => $request->input('endereco'),
             'cep' => $request->input('cep'),
             'subtotal' => $subtotal,
             'frete' => $frete,
-            'status' => 'pendente'
+            'total' => $total,
+            'status' => 'pendente',
         ]);
 
+        // Associando produtos ao pedido
         foreach ($carrinho as $item) {
-            ItemPedido::create([
-                'pedido_id' => $pedido->id,
-                'produto_id' => $item['produto_id'],
-                'variacao' => $item['variacao'],
+            $pedido->produtos()->attach($item['produto_id'], [
                 'quantidade' => $item['quantidade'],
-                'preco_unitario' => $item['preco']
+                'preco' => $item['preco']
             ]);
         }
 
-        
         session()->forget('carrinho');
-
         return redirect()->route('carrinho.index')->with('success', 'Pedido realizado com sucesso!');
     }
 }

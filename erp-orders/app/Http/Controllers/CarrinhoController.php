@@ -18,22 +18,20 @@ class CarrinhoController extends Controller
         return view('carrinho.index', compact('carrinho', 'subtotal', 'frete', 'total'));
     }
 
-    public function adicionar(Request $request)
+    public function adicionar(Request $request, $id)
     {
-        $produto_id = $request->input('produto_id');
-        $variacao = $request->input('variacao');
-        $quantidade = (int)$request->input('quantidade');
+        $produto_id = $id;
+        $variacao = $request->input('variacao', 'padrão'); // ou null se não houver variação
+        $quantidade = (int)$request->input('quantidade', 1);
 
         $produto = Produto::findOrFail($produto_id);
-        $estoque = Estoque::where('produto_id', $produto_id)->where('variacao', $variacao)->first();
+        $estoque = Estoque::where('produto_id', $produto_id)
+                        ->where('variacao', $variacao)
+                        ->first();
 
-        if (!$estoque || $estoque->quantidade < $quantidade) {
-            return back()->with('error', 'Estoque insuficiente');
-        }
+    
 
-        
         $carrinho = session()->get('carrinho', []);
-
         $key = $produto_id . '-' . $variacao;
 
         if (isset($carrinho[$key])) {

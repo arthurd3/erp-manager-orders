@@ -58,7 +58,7 @@ class ProdutoController extends Controller
         session()->put('carrinho', $carrinho);
 
         // Redirecionar para o carrinho
-        return redirect()->route('carrinho.index')->with('success', 'Produto criado com sucesso e adicionado ao carrinho!');
+        return redirect()->route('produtos.index')->with('success', 'Produto criado com sucesso e adicionado ao carrinho!');
     }
 
     public function edit($id)

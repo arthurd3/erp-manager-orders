@@ -35,9 +35,10 @@ Route::prefix('produtos')->name('produtos.')->group(function () {
 });
 
 
-Route::prefix('carrinho')->name('carrinho.')->group(function () {
+
+Route::prefix('/carrinho')->name('carrinho.')->group(function () {
     Route::get('/', [CarrinhoController::class, 'index'])->name('index');
-    Route::post('/adicionar', [CarrinhoController::class, 'adicionar'])->name('adicionar');
+    Route::post('/adicionar/{id}', [CarrinhoController::class, 'adicionar'])->name('adicionar');
     Route::put('/atualizar/{index}', [CarrinhoController::class, 'atualizar'])->name('atualizar');
     Route::delete('/remover/{index}', [CarrinhoController::class, 'remover'])->name('remover');
 });

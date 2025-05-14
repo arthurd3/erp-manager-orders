@@ -10,11 +10,16 @@ class Produto extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'preco'];
+    protected $fillable = ['produto_id','nome', 'preco'];
 
     public function estoques()
     {
         return $this->hasMany(Estoque::class);
+    }
+
+    public function pedidos()
+    {
+        return $this->belongsToMany(Pedido::class)->withPivot('quantidade', 'preco');
     }
 }
 

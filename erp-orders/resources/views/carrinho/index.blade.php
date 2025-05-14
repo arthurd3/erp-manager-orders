@@ -49,9 +49,6 @@
             <p class="text-xl font-semibold text-gray-800"><strong>Total:</strong> R$ {{ number_format($total, 2, ',', '.') }}</p>
         </div>
 
-        <div class="mt-6 flex justify-center">
-            <a href="#" class="btn btn-primary bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600">Finalizar Pedido</a>
-        </div>
     @else
         <p class="text-center text-gray-600">Seu carrinho está vazio.</p>
     @endif
