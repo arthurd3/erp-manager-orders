@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('estoques', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('produto_id');
-            $table->string('variacao')->nullable(); // exemplo: "Tamanho M", "Cor Azul"
+            $table->string('variacao')->nullable(); 
             $table->integer('quantidade');
             $table->timestamps();
 

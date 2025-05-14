@@ -10,6 +10,8 @@
                 <tr>
                     <th class="px-4 py-2 text-sm font-semibold text-gray-600">Nome</th>
                     <th class="px-4 py-2 text-sm font-semibold text-gray-600">Preço</th>
+                    <th class="px-4 py-2 text-sm font-semibold text-gray-600">Descrição</th>
+                    <th class="px-4 py-2 text-sm font-semibold text-gray-600">Quantidade</th>
                     <th class="px-4 py-2 text-sm font-semibold text-gray-600">Ações</th>
                 </tr>
             </thead>
@@ -18,16 +20,18 @@
                 <tr class="border-t">
                     <td class="px-4 py-2">{{ $produto->nome }}</td>
                     <td class="px-4 py-2">R$ {{ number_format($produto->preco, 2, ',', '.') }}</td>
-                    <td class="px-4 py-2">
-                        <a href="{{ route('produtos.edit', $produto->id) }}" class="btn btn-warning text-yellow-600 hover:text-white bg-yellow-100 hover:bg-yellow-600 px-4 py-2 rounded-md">Editar</a>
-                        <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST" style="display:inline;">
+                    <td class="px-4 py-2">{{ $produto->descricao }}</td>
+                    <td class="px-4 py-2">{{ $produto->quantidade }}</td>
+                    <td class="px-4 py-2 space-y-2">
+                        <a href="{{ route('produtos.edit', $produto->id) }}" class="inline-block btn btn-warning text-yellow-600 hover:text-white bg-yellow-100 hover:bg-yellow-600 px-4 py-2 rounded-md">Editar</a>
+                        <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST" class="inline-block">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="ml-2 bg-red-500 text-white hover:bg-red-700 px-4 py-2 rounded-md">Excluir</button>
+                            <button type="submit" class="bg-red-500 text-white hover:bg-red-700 px-4 py-2 rounded-md">Excluir</button>
                         </form>
-                        <form action="{{ route('carrinho.adicionar', $produto->id) }}" method="POST">
+                        <form action="{{ route('carrinho.adicionar', $produto->id) }}" method="POST" class="inline-block">
                             @csrf
-                            <button type="submit" class="ml-2 bg-green-500 text-white hover:bg-green-700 px-4 py-2 rounded-md">Adicionar ao Carrinho</button>
+                            <button type="submit" class="bg-green-500 text-white hover:bg-green-700 px-4 py-2 rounded-md">Adicionar ao Carrinho</button>
                         </form>
                     </td>
                 </tr>

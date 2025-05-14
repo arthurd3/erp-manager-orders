@@ -13,8 +13,8 @@ return new class extends Migration
             $table->id();
             $table->string('codigo')->unique();
             $table->decimal('desconto', 10, 2);
-            $table->decimal('valor_minimo', 10, 2)->nullable(); // Corrigido o nome para 'valor_minimo'
-            $table->boolean('tipo_percentual'); // Adicionando a coluna 'tipo_percentual'
+            $table->decimal('valor_minimo', 10, 2)->nullable(); 
+            $table->boolean('tipo_percentual'); 
             $table->date('validade');
             $table->timestamps();
         });

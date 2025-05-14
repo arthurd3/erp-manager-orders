@@ -67,9 +67,16 @@
                 </div>
             </div>
 
-            <div class="flex justify-center">
+             
+            <div class="mt-4">
+                <label for="cupom" class="block text-sm font-medium text-gray-700">Cupom de Desconto</label>
+                <input type="text" name="cupom" id="cupom" class="form-input w-full py-2 px-4 border rounded-md" placeholder="Digite seu cupom">
+            </div>
+
+            <div class="flex justify-center mt-6">
                 <button type="submit" class="btn btn-success bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700">Finalizar Pedido</button>
             </div>
+            
         </form>
     @endif
 </div>
