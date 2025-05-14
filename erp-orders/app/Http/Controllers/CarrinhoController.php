@@ -31,7 +31,7 @@ class CarrinhoController extends Controller
             return back()->with('error', 'Estoque insuficiente');
         }
 
-        // Atualiza carrinho na sessão
+        
         $carrinho = session()->get('carrinho', []);
 
         $key = $produto_id . '-' . $variacao;

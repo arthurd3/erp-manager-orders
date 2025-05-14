@@ -73,7 +73,7 @@
 </div>
 
 <script>
-    // Script para buscar o endereço a partir do CEP
+    
     document.getElementById('cep').addEventListener('blur', function () {
         let cep = this.value.replace(/\D/g, '');
 

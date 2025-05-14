@@ -15,5 +15,5 @@
         <div class="col-md-3">
             <button type="submit" class="btn btn-success">Comprar</button>
         </div>
-    </div>
+    </div>`
 </form>

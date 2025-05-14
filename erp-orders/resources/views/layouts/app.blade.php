@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Título Padrão')</title>
-    <!-- Link para o Tailwind CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
@@ -16,11 +16,12 @@
             <nav class="flex justify-between items-center">
                 <a href="{{ route('produtos.create') }}" class="text-blue-500 hover:text-blue-700">Cadastrar Produto</a>
                 <a href="{{ route('produtos.create') }}" class="text-blue-500 hover:text-blue-700">Carrinho de Produto</a>
+                <a href="{{ route('produtos.index') }}" class="text-blue-500 hover:text-blue-700">Listagem de Produto</a>
             </nav>
         </header>
 
         <main class="my-8">
-            @yield('content')  <!-- Onde o conteúdo da página será injetado -->
+            @yield('content')  
         </main>
 
         
