@@ -13,7 +13,6 @@ class PedidoController extends Controller
             return redirect()->back()->with('error', 'Carrinho vazio.');
         }
 
-        
         $subtotal = collect($carrinho)->sum(fn($item) => $item['preco'] * $item['quantidade']);
         $frete = $subtotal > 200 ? 0 : ($subtotal >= 52 && $subtotal <= 166.59 ? 15 : 20);
 
@@ -25,7 +24,6 @@ class PedidoController extends Controller
             'status' => 'pendente'
         ]);
 
-        
         foreach ($carrinho as $item) {
             ItemPedido::create([
                 'pedido_id' => $pedido->id,

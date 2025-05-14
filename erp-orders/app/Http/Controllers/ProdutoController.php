@@ -22,6 +22,7 @@ class ProdutoController extends Controller
 
     public function store(Request $request)
     {
+        // Validação dos dados recebidos
         $request->validate([
             'nome' => 'required',
             'preco' => 'required|numeric',
@@ -30,11 +31,13 @@ class ProdutoController extends Controller
             'variacoes.*.quantidade' => 'required|integer'
         ]);
 
+        // Criação do produto
         $produto = Produto::create([
             'nome' => $request->nome,
             'preco' => $request->preco
         ]);
 
+        // Criação do estoque para as variações
         foreach ($request->variacoes as $variacao) {
             Estoque::create([
                 'produto_id' => $produto->id,
@@ -43,7 +46,19 @@ class ProdutoController extends Controller
             ]);
         }
 
-        return redirect()->route('produtos.index')->with('success', 'Produto criado com sucesso!');
+        // Adicionar produto ao carrinho (usando o ID do produto)
+        $carrinho = session()->get('carrinho', []);
+        $carrinho[] = [
+            'id' => $produto->id,
+            'nome' => $produto->nome,
+            'preco' => $produto->preco,
+            'quantidade' => 1, // A quantidade inicial do produto no carrinho
+        ];
+
+        session()->put('carrinho', $carrinho);
+
+        // Redirecionar para o carrinho
+        return redirect()->route('carrinho.index')->with('success', 'Produto criado com sucesso e adicionado ao carrinho!');
     }
 
     public function edit($id)
@@ -61,7 +76,7 @@ class ProdutoController extends Controller
             'preco' => $request->preco
         ]);
 
-        // Atualiza os estoques existentes
+    
         foreach ($request->variacoes as $estoque_id => $data) {
             $estoque = Estoque::find($estoque_id);
             if ($estoque) {
