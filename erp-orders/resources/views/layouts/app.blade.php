@@ -15,6 +15,8 @@
         <header class="py-4">
             <nav class="flex justify-between items-center">
                 <a href="{{ route('produtos.create') }}" class="text-blue-500 hover:text-blue-700">Cadastrar Produto</a>
+                <a href="{{ route('cupons.create') }}" class="text-blue-500 hover:text-blue-700">Cadastrar Cupons</a>
+                <a href="{{ route('cupons.index') }}" class="text-blue-500 hover:text-blue-700">Listagem de Cupons</a>
                 <a href="{{ route('carrinho.index') }}" class="text-blue-500 hover:text-blue-700">Carrinho de Produto</a>
                 <a href="{{ route('produtos.index') }}" class="text-blue-500 hover:text-blue-700">Listagem de Produto</a>
             </nav>
@@ -26,7 +28,7 @@
 
         
     </div>
-
+    
 </body>
 
 </html>

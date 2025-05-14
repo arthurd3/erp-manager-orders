@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\ProdutoController;
-
+use App\Http\Controllers\CupomController;
 
 Route::get('/', function () {
     return redirect()->route('produtos.produtos_create');
@@ -24,6 +24,14 @@ Route::prefix('produtos')->name('produtos.')->group(function () {
 });
 
 
+Route::prefix('/cupons')->name('cupons.')->group(function () {
+    Route::get('/', [CupomController::class, 'index'])->name('index');
+    Route::get('/create', [CupomController::class, 'create'])->name('create');
+    Route::post('/', [CupomController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [CupomController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [CupomController::class, 'update'])->name('update');
+    Route::delete('/{id}', [CupomController::class, 'destroy'])->name('destroy');
+});
 
 Route::prefix('/carrinho')->name('carrinho.')->group(function () {
     Route::get('/', [CarrinhoController::class, 'index'])->name('index');
